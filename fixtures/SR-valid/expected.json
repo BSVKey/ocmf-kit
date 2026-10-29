@@ -1,0 +1,9 @@
+{
+  "mode": "valid",
+  "format": "SR",
+  "expect": "accept",
+  "valid": true,
+  "problems": [],
+  "warnings": [],
+  "energy": "7.825"
+}

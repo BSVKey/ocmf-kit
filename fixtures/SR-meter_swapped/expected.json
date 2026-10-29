@@ -1,0 +1,11 @@
+{
+  "mode": "meter_swapped",
+  "format": "SR",
+  "expect": "reject: end record comes from another meter serial",
+  "valid": false,
+  "problems": [
+    "meter_changed"
+  ],
+  "warnings": [],
+  "energy": "7.825"
+}

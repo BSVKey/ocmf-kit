@@ -1,0 +1,11 @@
+{
+  "mode": "meter_fault",
+  "format": "SR",
+  "expect": "reject: meter status is not G (good)",
+  "valid": false,
+  "problems": [
+    "meter_status"
+  ],
+  "warnings": [],
+  "energy": "7.825"
+}

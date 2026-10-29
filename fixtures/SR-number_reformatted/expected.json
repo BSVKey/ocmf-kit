@@ -1,0 +1,11 @@
+{
+  "mode": "number_reformatted",
+  "format": "SR",
+  "expect": "reject: 1234.500 rewritten as 1234.5000 (same number, but the signed text changed)",
+  "valid": false,
+  "problems": [
+    "signature_invalid"
+  ],
+  "warnings": [],
+  "energy": "7.8250"
+}

@@ -1,0 +1,11 @@
+{
+  "mode": "register_backwards",
+  "format": "MR",
+  "expect": "reject: the end reading is lower than the start",
+  "valid": false,
+  "problems": [
+    "register_went_backwards"
+  ],
+  "warnings": [],
+  "energy": "-1.000"
+}

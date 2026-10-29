@@ -1,0 +1,11 @@
+{
+  "mode": "replayed_page",
+  "format": "SR",
+  "expect": "reject: the same page number is sent twice",
+  "valid": false,
+  "problems": [
+    "page_repeated"
+  ],
+  "warnings": [],
+  "energy": "7.825"
+}

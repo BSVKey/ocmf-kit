@@ -1,0 +1,11 @@
+{
+  "mode": "whitespace_changed",
+  "format": "MR",
+  "expect": "reject: whitespace in the signed part was changed",
+  "valid": false,
+  "problems": [
+    "signature_invalid"
+  ],
+  "warnings": [],
+  "energy": "7.825"
+}

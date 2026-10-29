@@ -1,0 +1,11 @@
+{
+  "mode": "wrong_key",
+  "format": "MR",
+  "expect": "reject: signed by a different key than the one advertised",
+  "valid": false,
+  "problems": [
+    "signature_invalid"
+  ],
+  "warnings": [],
+  "energy": "7.825"
+}

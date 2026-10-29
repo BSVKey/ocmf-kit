@@ -1,0 +1,11 @@
+{
+  "mode": "invalid_signature",
+  "format": "SR",
+  "expect": "reject: signature block is garbage",
+  "valid": false,
+  "problems": [
+    "signature_invalid"
+  ],
+  "warnings": [],
+  "energy": "7.825"
+}

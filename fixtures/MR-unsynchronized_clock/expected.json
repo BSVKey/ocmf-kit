@@ -1,0 +1,12 @@
+{
+  "mode": "unsynchronized_clock",
+  "format": "MR",
+  "expect": "accept with warning: meter clock not synchronized",
+  "valid": true,
+  "problems": [],
+  "warnings": [
+    "clock_unsynchronized",
+    "clock_unsynchronized"
+  ],
+  "energy": "7.825"
+}

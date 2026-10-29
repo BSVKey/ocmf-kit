@@ -1,0 +1,5 @@
+ocmf-kit
+Copyright 2026 Embryo Space Inc. (DBA BSVKey)
+
+Implements the Open Charge Metering Format (OCMF) published by S.A.F.E. e.V.
+No code from other OCMF implementations is included.

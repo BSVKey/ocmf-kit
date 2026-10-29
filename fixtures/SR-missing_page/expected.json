@@ -1,0 +1,11 @@
+{
+  "mode": "missing_page",
+  "format": "SR",
+  "expect": "reject: a record in the middle is missing",
+  "valid": false,
+  "problems": [
+    "page_missing"
+  ],
+  "warnings": [],
+  "energy": "7.825"
+}

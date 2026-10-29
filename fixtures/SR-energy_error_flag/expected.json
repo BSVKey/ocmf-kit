@@ -1,0 +1,11 @@
+{
+  "mode": "energy_error_flag",
+  "format": "SR",
+  "expect": "reject: the meter flagged the energy value unusable",
+  "valid": false,
+  "problems": [
+    "energy_error_flag"
+  ],
+  "warnings": [],
+  "energy": "7.825"
+}

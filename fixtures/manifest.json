@@ -1,0 +1,297 @@
+[
+  {
+    "dir": "SR-valid",
+    "mode": "valid",
+    "format": "SR",
+    "expect": "accept",
+    "valid": true,
+    "problems": [],
+    "warnings": [],
+    "energy": "7.825"
+  },
+  {
+    "dir": "SR-tampered_payload",
+    "mode": "tampered_payload",
+    "format": "SR",
+    "expect": "reject: a reading was changed after signing",
+    "valid": false,
+    "problems": [
+      "signature_invalid"
+    ],
+    "warnings": [],
+    "energy": "7.826"
+  },
+  {
+    "dir": "SR-wrong_key",
+    "mode": "wrong_key",
+    "format": "SR",
+    "expect": "reject: signed by a different key than the one advertised",
+    "valid": false,
+    "problems": [
+      "signature_invalid",
+      "signature_invalid"
+    ],
+    "warnings": [],
+    "energy": "7.825"
+  },
+  {
+    "dir": "SR-invalid_signature",
+    "mode": "invalid_signature",
+    "format": "SR",
+    "expect": "reject: signature block is garbage",
+    "valid": false,
+    "problems": [
+      "signature_invalid"
+    ],
+    "warnings": [],
+    "energy": "7.825"
+  },
+  {
+    "dir": "SR-replayed_page",
+    "mode": "replayed_page",
+    "format": "SR",
+    "expect": "reject: the same page number is sent twice",
+    "valid": false,
+    "problems": [
+      "page_repeated"
+    ],
+    "warnings": [],
+    "energy": "7.825"
+  },
+  {
+    "dir": "SR-missing_page",
+    "mode": "missing_page",
+    "format": "SR",
+    "expect": "reject: a record in the middle is missing",
+    "valid": false,
+    "problems": [
+      "page_missing"
+    ],
+    "warnings": [],
+    "energy": "7.825"
+  },
+  {
+    "dir": "SR-meter_swapped",
+    "mode": "meter_swapped",
+    "format": "SR",
+    "expect": "reject: end record comes from another meter serial",
+    "valid": false,
+    "problems": [
+      "meter_changed"
+    ],
+    "warnings": [],
+    "energy": "7.825"
+  },
+  {
+    "dir": "SR-register_backwards",
+    "mode": "register_backwards",
+    "format": "SR",
+    "expect": "reject: the end reading is lower than the start",
+    "valid": false,
+    "problems": [
+      "register_went_backwards"
+    ],
+    "warnings": [],
+    "energy": "-1.000"
+  },
+  {
+    "dir": "SR-energy_error_flag",
+    "mode": "energy_error_flag",
+    "format": "SR",
+    "expect": "reject: the meter flagged the energy value unusable",
+    "valid": false,
+    "problems": [
+      "energy_error_flag"
+    ],
+    "warnings": [],
+    "energy": "7.825"
+  },
+  {
+    "dir": "SR-meter_fault",
+    "mode": "meter_fault",
+    "format": "SR",
+    "expect": "reject: meter status is not G (good)",
+    "valid": false,
+    "problems": [
+      "meter_status"
+    ],
+    "warnings": [],
+    "energy": "7.825"
+  },
+  {
+    "dir": "SR-whitespace_changed",
+    "mode": "whitespace_changed",
+    "format": "SR",
+    "expect": "reject: whitespace in the signed part was changed",
+    "valid": false,
+    "problems": [
+      "signature_invalid"
+    ],
+    "warnings": [],
+    "energy": "7.825"
+  },
+  {
+    "dir": "SR-number_reformatted",
+    "mode": "number_reformatted",
+    "format": "SR",
+    "expect": "reject: 1234.500 rewritten as 1234.5000 (same number, but the signed text changed)",
+    "valid": false,
+    "problems": [
+      "signature_invalid"
+    ],
+    "warnings": [],
+    "energy": "7.8250"
+  },
+  {
+    "dir": "SR-unsynchronized_clock",
+    "mode": "unsynchronized_clock",
+    "format": "SR",
+    "expect": "accept with warning: meter clock not synchronized",
+    "valid": true,
+    "problems": [],
+    "warnings": [
+      "clock_unsynchronized",
+      "clock_unsynchronized"
+    ],
+    "energy": "7.825"
+  },
+  {
+    "dir": "SR-hostile_text",
+    "mode": "hostile_text",
+    "format": "SR",
+    "expect": "accept: valid signature, but text fields carry HTML and script; a checker must show them as text",
+    "valid": true,
+    "problems": [],
+    "warnings": [],
+    "energy": "7.825"
+  },
+  {
+    "dir": "MR-valid",
+    "mode": "valid",
+    "format": "MR",
+    "expect": "accept",
+    "valid": true,
+    "problems": [],
+    "warnings": [],
+    "energy": "7.825"
+  },
+  {
+    "dir": "MR-tampered_payload",
+    "mode": "tampered_payload",
+    "format": "MR",
+    "expect": "reject: a reading was changed after signing",
+    "valid": false,
+    "problems": [
+      "signature_invalid"
+    ],
+    "warnings": [],
+    "energy": "7.824"
+  },
+  {
+    "dir": "MR-wrong_key",
+    "mode": "wrong_key",
+    "format": "MR",
+    "expect": "reject: signed by a different key than the one advertised",
+    "valid": false,
+    "problems": [
+      "signature_invalid"
+    ],
+    "warnings": [],
+    "energy": "7.825"
+  },
+  {
+    "dir": "MR-invalid_signature",
+    "mode": "invalid_signature",
+    "format": "MR",
+    "expect": "reject: signature block is garbage",
+    "valid": false,
+    "problems": [
+      "signature_invalid"
+    ],
+    "warnings": [],
+    "energy": "7.825"
+  },
+  {
+    "dir": "MR-register_backwards",
+    "mode": "register_backwards",
+    "format": "MR",
+    "expect": "reject: the end reading is lower than the start",
+    "valid": false,
+    "problems": [
+      "register_went_backwards"
+    ],
+    "warnings": [],
+    "energy": "-1.000"
+  },
+  {
+    "dir": "MR-energy_error_flag",
+    "mode": "energy_error_flag",
+    "format": "MR",
+    "expect": "reject: the meter flagged the energy value unusable",
+    "valid": false,
+    "problems": [
+      "energy_error_flag"
+    ],
+    "warnings": [],
+    "energy": "7.825"
+  },
+  {
+    "dir": "MR-meter_fault",
+    "mode": "meter_fault",
+    "format": "MR",
+    "expect": "reject: meter status is not G (good)",
+    "valid": false,
+    "problems": [
+      "meter_status"
+    ],
+    "warnings": [],
+    "energy": "7.825"
+  },
+  {
+    "dir": "MR-whitespace_changed",
+    "mode": "whitespace_changed",
+    "format": "MR",
+    "expect": "reject: whitespace in the signed part was changed",
+    "valid": false,
+    "problems": [
+      "signature_invalid"
+    ],
+    "warnings": [],
+    "energy": "7.825"
+  },
+  {
+    "dir": "MR-number_reformatted",
+    "mode": "number_reformatted",
+    "format": "MR",
+    "expect": "reject: 1234.500 rewritten as 1234.5000 (same number, but the signed text changed)",
+    "valid": false,
+    "problems": [
+      "signature_invalid"
+    ],
+    "warnings": [],
+    "energy": "7.8250"
+  },
+  {
+    "dir": "MR-unsynchronized_clock",
+    "mode": "unsynchronized_clock",
+    "format": "MR",
+    "expect": "accept with warning: meter clock not synchronized",
+    "valid": true,
+    "problems": [],
+    "warnings": [
+      "clock_unsynchronized",
+      "clock_unsynchronized"
+    ],
+    "energy": "7.825"
+  },
+  {
+    "dir": "MR-hostile_text",
+    "mode": "hostile_text",
+    "format": "MR",
+    "expect": "accept: valid signature, but text fields carry HTML and script; a checker must show them as text",
+    "valid": true,
+    "problems": [],
+    "warnings": [],
+    "energy": "7.825"
+  }
+]

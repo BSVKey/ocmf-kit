@@ -1,0 +1,11 @@
+{
+  "mode": "tampered_payload",
+  "format": "MR",
+  "expect": "reject: a reading was changed after signing",
+  "valid": false,
+  "problems": [
+    "signature_invalid"
+  ],
+  "warnings": [],
+  "energy": "7.824"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@bsvkey/ocmf-kit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Generate and check OCMF signed meter readings (German Eichrecht EV charging data): a simulated signing meter with tamper modes, a session checker, OCPP 1.6 and 2.x mappings, and a browser checker. Zero dependencies.",
+  "bin": { "ocmf": "bin/ocmf.mjs" },
+  "exports": {
+    ".": "./src/index.mjs",
+    "./web": "./src/web.mjs"
+  },
+  "scripts": {
+    "test": "node --test",
+    "fixtures": "node scripts/make-fixtures.mjs"
+  },
+  "engines": { "node": ">=18" },
+  "license": "Apache-2.0",
+  "author": "Embryo Space Inc. (DBA BSVKey)"
+}

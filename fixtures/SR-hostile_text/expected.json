@@ -1,0 +1,9 @@
+{
+  "mode": "hostile_text",
+  "format": "SR",
+  "expect": "accept: valid signature, but text fields carry HTML and script; a checker must show them as text",
+  "valid": true,
+  "problems": [],
+  "warnings": [],
+  "energy": "7.825"
+}

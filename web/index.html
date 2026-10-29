@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check a Charging Receipt</title>
+<meta name="description" content="Check the signed meter readings (OCMF) from an EV charging session in your browser. Nothing is uploaded.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<style>
+  :root { --bg:#f7f8fa; --card:#fff; --ink:#14181f; --muted:#5b6472; --line:#dde2ea; --good:#127a3a; --good-bg:#e7f6ec; --bad:#b42318; --bad-bg:#fdecea; --warn:#8a5a00; --warn-bg:#fff4dc; --accent:#1f5eff; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0e1116; --card:#161b22; --ink:#e6e9ee; --muted:#9aa4b2; --line:#2a313c; --good:#4ade80; --good-bg:#0f2a19; --bad:#f87171; --bad-bg:#2c1212; --warn:#fbbf24; --warn-bg:#2a2010; --accent:#7aa2ff; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 1.6rem; margin: 0 0 4px; }
+  .lead { color: var(--muted); margin: 0 0 20px; }
+  .card { background: var(--card); border:1px solid var(--line); border-radius: 12px; padding: 16px; margin: 0 0 16px; }
+  .step { font-weight: 600; margin: 0 0 8px; }
+  label { display:block; font-weight:600; margin: 12px 0 4px; }
+  .hint { color: var(--muted); font-size: .9rem; margin: 2px 0 6px; }
+  textarea, input { width:100%; font: 13px/1.4 ui-monospace, Consolas, monospace; padding:10px; border:1px solid var(--line); border-radius:8px; background:var(--bg); color:var(--ink); }
+  textarea { min-height: 140px; resize: vertical; }
+  button { font: inherit; border:1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 8px; padding: 8px 14px; cursor:pointer; }
+  button.primary { background: var(--accent); color: #fff; border-color: transparent; font-weight: 600; }
+  .row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .verdict { font-size: 1.3rem; font-weight: 700; padding: 12px 14px; border-radius: 10px; }
+  .verdict.good { background: var(--good-bg); color: var(--good); }
+  .verdict.bad { background: var(--bad-bg); color: var(--bad); }
+  ul.list { margin: 8px 0 0; padding-left: 20px; }
+  li.bad { color: var(--bad); } li.warn { color: var(--warn); }
+  table { border-collapse: collapse; width: 100%; font-size: .92rem; }
+  td, th { text-align:left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap:anywhere; }
+  th { color: var(--muted); font-weight: 600; width: 34%; }
+  .muted { color: var(--muted); font-size: .9rem; }
+  select { font: inherit; padding: 7px; border-radius: 8px; border:1px solid var(--line); background: var(--card); color: var(--ink); max-width: 100%; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Check a charging receipt</h1>
+  <p class="lead">German charging stations sign each meter reading (the OCMF format). Paste the signed data and the meter's public key; this page checks that the readings are genuine and complete, and shows the energy you were billed for. Everything runs in your browser. Nothing is uploaded.</p>
+
+  <div class="card">
+    <p class="step">1. Paste the signed readings</p>
+    <p class="hint">From your charging receipt, app or operator. Each record starts with <code>OCMF|</code>. OCPP messages with SignedData or signedMeterValue also work.</p>
+    <textarea id="data" spellcheck="false" placeholder="OCMF|{...}|{...}"></textarea>
+    <label for="key">2. Paste the meter's public key</label>
+    <p class="hint">Take it from the label on the charger or the operator's key list. Do not trust a key that came with the data: anyone who changed the data could change that key too.</p>
+    <input id="key" spellcheck="false" placeholder="3059301306072A8648CE3D0201...">
+    <label for="billed">3. Energy on your bill, in kWh (optional)</label>
+    <input id="billed" inputmode="decimal" placeholder="e.g. 7.825">
+    <div class="row" style="margin-top:14px">
+      <button class="primary" id="check">Check</button>
+      <span class="muted">or try an example:</span>
+      <select id="sample" aria-label="Example"><option value="">Choose an example…</option></select>
+    </div>
+  </div>
+
+  <div id="out" hidden>
+    <div class="card"><div id="verdict" class="verdict"></div><p id="next" class="muted" style="margin:10px 0 0"></p><ul id="problems" class="list"></ul></div>
+    <div class="card"><p class="step">Session</p><table id="facts"></table></div>
+    <div class="card"><p class="step">Records</p><table id="recs"></table></div>
+  </div>
+
+  <p class="muted">This checks signatures and session rules from the OCMF 1.4 specification. It is a convenience tool, not the officially approved transparency software. Open source (Apache-2.0) by BSVKey.</p>
+</main>
+<script type="module" src="./app.mjs"></script>
+</body>
+</html>
