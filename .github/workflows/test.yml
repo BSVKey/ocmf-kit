@@ -1,0 +1,18 @@
+name: test
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20, 22, 24]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: ${{ matrix.node }}
+      - run: node --test
+      - run: node bin/ocmf.mjs check fixtures/SR-valid/records.ocmf --key fixtures/SR-valid/publicKey.hex
+      - run: "! node bin/ocmf.mjs check fixtures/SR-tampered_payload/records.ocmf --key fixtures/SR-tampered_payload/publicKey.hex"
