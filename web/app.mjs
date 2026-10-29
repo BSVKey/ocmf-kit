@@ -55,7 +55,52 @@ async function run() {
   for (const x of r.records) row(table, `Record ${x.index + 1}${x.page ? ` (${x.page})` : ""}`, x.ok ? "Signature good" : EXPLAIN[x.reason] ?? x.reason);
 }
 
-$("check").addEventListener("click", () => run().catch((e) => { $("out").hidden = false; $("verdict").className = "verdict bad"; $("verdict").textContent = "Could not check"; $("next").textContent = e.message; }));
+// Text the page fills in (an example) clears as soon as someone starts typing or pastes,
+// so nobody has to delete it by hand. Typed text is never cleared.
+function markExample(input, value) {
+  input.value = value;
+  input.dataset.example = "1";
+  input.classList.add("example");
+}
+function unmark(input) { delete input.dataset.example; input.classList.remove("example"); }
+for (const id of ["data", "key", "billed"]) {
+  const input = $(id);
+  input.addEventListener("focus", () => { if (input.dataset.example) input.select(); });
+  input.addEventListener("beforeinput", () => { if (input.dataset.example) { input.value = ""; unmark(input); } });
+}
+
+const flash = (node, text) => { node.textContent = text; setTimeout(() => { if (node.textContent === text) node.textContent = ""; }, 2000); };
+
+// Paste / Copy / Clear under each box. Paste needs clipboard permission; when the browser
+// refuses, it says to use Ctrl+V instead.
+for (const bar of document.querySelectorAll(".tools")) {
+  const input = $(bar.dataset.for);
+  const note = el("span", null, "muted");
+  note.setAttribute("role", "status");
+  const btn = (label, fn) => { const b = el("button", label); b.type = "button"; b.addEventListener("click", fn); bar.append(b); };
+  btn("Paste", async () => {
+    try {
+      const t = await navigator.clipboard.readText();
+      unmark(input); input.value = t.trim(); input.focus(); flash(note, t ? "Pasted" : "Clipboard is empty");
+    } catch { input.focus(); flash(note, "Your browser blocked pasting here. Click the box and press Ctrl+V (Cmd+V on Mac)."); }
+  });
+  btn("Copy", async () => {
+    if (!input.value) return flash(note, "Nothing to copy");
+    try { await navigator.clipboard.writeText(input.value); flash(note, "Copied"); }
+    catch { input.select(); flash(note, "Selected. Press Ctrl+C (Cmd+C on Mac) to copy."); }
+  });
+  btn("Clear", () => { input.value = ""; unmark(input); input.focus(); });
+  bar.append(note);
+}
+
+$("copyResult").addEventListener("click", async () => {
+  const lines = [$("verdict").textContent, $("next").textContent, ...[...$("problems").children].map((li) => `- ${li.textContent}`)];
+  for (const t of [$("facts"), $("recs")]) for (const tr of t.rows) lines.push(`${tr.cells[0].textContent}: ${tr.cells[1].textContent}`);
+  try { await navigator.clipboard.writeText(lines.filter(Boolean).join("\n")); flash($("copied"), "Copied"); }
+  catch { flash($("copied"), "Your browser blocked copying."); }
+});
+
+$("check").addEventListener("click",() => run().catch((e) => { $("out").hidden = false; $("verdict").className = "verdict bad"; $("verdict").textContent = "Could not check"; $("next").textContent = e.message; }));
 
 // Examples from ../fixtures (made by scripts/make-fixtures.mjs).
 fetch("../fixtures/manifest.json").then((r) => (r.ok ? r.json() : [])).then((list) => {
@@ -67,7 +112,7 @@ fetch("../fixtures/manifest.json").then((r) => (r.ok ? r.json() : [])).then((lis
   sel.addEventListener("change", async () => {
     if (!sel.value) return;
     const [d, k] = await Promise.all([fetch(`../fixtures/${sel.value}/records.ocmf`).then((r) => r.text()), fetch(`../fixtures/${sel.value}/publicKey.hex`).then((r) => r.text())]);
-    $("data").value = d.trim(); $("key").value = k.trim(); $("billed").value = "";
+    markExample($("data"), d.trim()); markExample($("key"), k.trim()); $("billed").value = ""; unmark($("billed"));
     run();
   });
 }).catch(() => {});

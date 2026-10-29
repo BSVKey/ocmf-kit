@@ -23,6 +23,9 @@
   button { font: inherit; border:1px solid var(--line); background: var(--card); color: var(--ink); border-radius: 8px; padding: 8px 14px; cursor:pointer; }
   button.primary { background: var(--accent); color: #fff; border-color: transparent; font-weight: 600; }
   .row { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .tools { margin-top: 6px; }
+  .tools button { padding: 4px 10px; font-size: .85rem; }
+  .example { color: var(--muted); font-style: italic; }
   .verdict { font-size: 1.3rem; font-weight: 700; padding: 12px 14px; border-radius: 10px; }
   .verdict.good { background: var(--good-bg); color: var(--good); }
   .verdict.bad { background: var(--bad-bg); color: var(--bad); }
@@ -44,11 +47,14 @@
     <p class="step">1. Paste the signed readings</p>
     <p class="hint">From your charging receipt, app or operator. Each record starts with <code>OCMF|</code>. OCPP messages with SignedData or signedMeterValue also work.</p>
     <textarea id="data" spellcheck="false" placeholder="OCMF|{...}|{...}"></textarea>
+    <div class="row tools" data-for="data"></div>
     <label for="key">2. Paste the meter's public key</label>
     <p class="hint">Take it from the label on the charger or the operator's key list. Do not trust a key that came with the data: anyone who changed the data could change that key too.</p>
     <input id="key" spellcheck="false" placeholder="3059301306072A8648CE3D0201...">
+    <div class="row tools" data-for="key"></div>
     <label for="billed">3. Energy on your bill, in kWh (optional)</label>
     <input id="billed" inputmode="decimal" placeholder="e.g. 7.825">
+    <div class="row tools" data-for="billed"></div>
     <div class="row" style="margin-top:14px">
       <button class="primary" id="check">Check</button>
       <span class="muted">or try an example:</span>
@@ -57,7 +63,8 @@
   </div>
 
   <div id="out" hidden>
-    <div class="card"><div id="verdict" class="verdict"></div><p id="next" class="muted" style="margin:10px 0 0"></p><ul id="problems" class="list"></ul></div>
+    <div class="card"><div id="verdict" class="verdict"></div><p id="next" class="muted" style="margin:10px 0 0"></p><ul id="problems" class="list"></ul>
+      <div class="row" style="margin-top:12px"><button id="copyResult" type="button">Copy result</button><span id="copied" class="muted" role="status"></span></div></div>
     <div class="card"><p class="step">Session</p><table id="facts"></table></div>
     <div class="card"><p class="step">Records</p><table id="recs"></table></div>
   </div>
